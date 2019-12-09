@@ -2337,7 +2337,9 @@ This is useful for recursive `ivy-read'."
         (setq coll (sort (copy-sequence coll) sort-fn)))
       (when def
         (cond ((stringp (car-safe def))
-               (setq coll (cl-union def coll :test #'equal)))
+               (setq coll
+                     (delete-dups
+                      (append def coll))))
               ((and (stringp def) (not (member def coll)))
                (push def coll))))
       (setq coll (ivy--set-candidates coll))
